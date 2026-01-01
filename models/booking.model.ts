@@ -3,7 +3,7 @@ import Event from './event.model';
 
 // TypeScript interface for Booking document
 export interface IBooking extends Document {
-  eventId: Types.ObjectId;
+  eventId: string;
   email: string;
   createdAt: Date;
   updatedAt: Date;
@@ -12,7 +12,7 @@ export interface IBooking extends Document {
 const BookingSchema = new Schema<IBooking>(
   {
     eventId: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'Event',
       required: [true, 'Event ID is required'],
     },
@@ -37,7 +37,7 @@ const BookingSchema = new Schema<IBooking>(
 );
 
 // Pre-save hook to validate event exists before creating booking
-BookingSchema.pre('save', async function (next) {
+BookingSchema.pre('save', async function () {
   const booking = this as IBooking;
 
   // Only validate eventId if it's new or modified
@@ -48,16 +48,16 @@ BookingSchema.pre('save', async function (next) {
       if (!eventExists) {
         const error = new Error(`Event with ID ${booking.eventId} does not exist`);
         error.name = 'ValidationError';
-        return next(error);
+        return;
       }
     } catch {
       const validationError = new Error('Invalid event ID format or database error');
       validationError.name = 'ValidationError';
-      return next(validationError);
+      return ;
     }
   }
 
-  next();
+
 });
 
 // Create index on eventId for faster queries

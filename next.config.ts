@@ -1,10 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  reactCompiler : true,
-  experimental : {
+  experimental: {
+    cacheComponents: true,
     turbopackFileSystemCacheForDev : true
   },
+  images : {
+    remotePatterns : [
+      {
+        protocol : 'https',
+        hostname : 'res.cloudinary.com'
+      }
+    ]
+  },
+  reactCompiler : true,
+  
   async rewrites() {
     return [
       {
