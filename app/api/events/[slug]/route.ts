@@ -7,6 +7,15 @@ type RouteParms = {
 params : Promise<{slug : string}>
 }
 
+/**
+ * Retrieve an Event by its slug from the database and return a JSON HTTP response.
+ *
+ * @param params - An object whose `params` promise resolves to `{ slug: string }`; the `slug` is validated and normalized before lookup.
+ * @returns A NextResponse containing JSON:
+ * - On success: status 200 with `{ message: 'Event found sucessfully', event }`.
+ * - If the slug is missing/invalid or no event matches: status 404 with an explanatory `message`.
+ * Note: exceptions are logged to the console in development; the function does not produce an explicit error response on thrown exceptions.
+ */
 export async function GET(req : NextRequest ,{params} : RouteParms){
 
 try{
