@@ -131,7 +131,12 @@ const EventSchema = new Schema<IEvent>(
 
 
 
-// Helper function to generate URL-friendly slug
+/**
+ * Creates a URL-safe slug from a title.
+ *
+ * @param title - The input string to convert into a slug
+ * @returns The title converted to a lowercase, trimmed, hyphen-separated slug with non-alphanumeric characters removed
+ */
 function generateSlug(title: string): string {
   return title
     .toLowerCase()

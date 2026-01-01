@@ -2,6 +2,11 @@ import connectDB from '@/lib/mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 import { Event } from '@/models'; // make sure the default export matches
 import { v2 as cloudinary } from 'cloudinary';
+/**
+ * Create a new Event by uploading the provided image to Cloudinary and saving the event data to the database.
+ *
+ * @returns A JSON NextResponse containing the created event and status 201 on success; a 400 JSON response if the image is missing; a 500 JSON response with an error message on failure.
+ */
 export async function POST(request: NextRequest) {
   let uploadResult;
   try {
@@ -54,6 +59,13 @@ export async function POST(request: NextRequest) {
   }
 }
 
+/**
+ * Retrieve all Event documents sorted by newest first.
+ *
+ * Connects to the database and returns events ordered by `createdAt` descending.
+ *
+ * @returns A JSON HTTP response containing a success message and an `events` array with status `200` on success; on failure, a JSON response with an `error` message and status `500`.
+ */
 export async function GET (){
   try{
     await connectDB();
